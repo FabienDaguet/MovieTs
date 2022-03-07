@@ -1,10 +1,11 @@
 import './App.css';
-import MovieSeacrh from './components/MovieSearch';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Router from './components/Router';
 
 function App() {
   return (
     <>
-      <MovieSeacrh />
+      <Router />
     </>
   );
 }

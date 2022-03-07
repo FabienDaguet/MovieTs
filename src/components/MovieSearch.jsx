@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import MovieCard from './MovieCard';
 
 const MovieSeacrh = () => {
 
@@ -25,22 +26,23 @@ const MovieSeacrh = () => {
 
   }
 
-  const moviesItems = resultSearch.map((moviesResult, id) => {
-    return (
-      <div key={moviesResult.id}>
-          <img src={`https://image.tmdb.org/t/p/original/${moviesResult.poster_path}`} alt={`affiche ${moviesResult.title}`}/>
-          <h2>{moviesResult.title}</h2>
-        </div>
-    )
-  })
-
   return (
     <div>
         <h1>Films</h1>
         Recherche : <input type="text" onChange={handleSearchTermChange}/>
         <button className="form-button" type="submit" onClick={() => fetchMovies(searchTerm)}>recherche</button>
-        {moviesItems}
-    </div>
+        <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>
+        {resultSearch.map((moviesResult, id) => {
+          return (
+              <MovieCard 
+                key={moviesResult.id} 
+                {...moviesResult}
+                onclick={() => console.log(moviesResult)}
+              />
+              )
+            })}
+          </div>
+      </div>
   )
 }
 

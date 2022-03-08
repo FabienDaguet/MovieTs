@@ -12,8 +12,8 @@ const Index = () => {
     });
 
     const submit = (e) => {
-        console.log(user);
-        const isLogged = user.email == 'admin' && user.password == 'password';
+        //console.log(user);
+        const isLogged = user.email === 'admin' && user.password === 'password';
         if (isLogged) {
             navigate("/films") 
         }

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios'
 import MovieCard from "./MovieCard";
+import { useNavigate } from "react-router-dom";
 
 
-const MoviesList = () => {
+const MoviesList = ({setSelectedMovie}) => {
+
+    let navigate = useNavigate();
     const [movies, setMovies] = useState([]);
-
     const URL = "https://api.themoviedb.org/3"
     const REQUEST = "/discover/movie?sort_by=popularity.desc"
     const APIKEY = "&api_key=3d07ff060bc510e2d02c73f56db64a16"
@@ -30,7 +32,7 @@ const MoviesList = () => {
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
-                                onClick={() => console.log(movie)}
+                                onClick={() => {setSelectedMovie(movie); navigate(`/films/${movie.title}`)}}
                             />
                         )
                         :

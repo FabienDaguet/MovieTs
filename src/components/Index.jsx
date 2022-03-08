@@ -12,7 +12,7 @@ const Index = () => {
     });
 
     const submit = (e) => {
-        //console.log(user);
+        console.log(user);
         const isLogged = user.email == 'admin' && user.password == 'password';
         if (isLogged) {
             navigate("/films") 
@@ -22,30 +22,32 @@ const Index = () => {
     return (
 
         // Login form
-        <div className='form-signin'>
-            <form className="form">
-                <TextInput
-                    type="text"
-                    label="login"
-                    name="login"
-                    id="floatingInput"
-                    placeholder="exemple@mail.com"
-                    value={user.email}
-                    action={(event) => setUser({ ...user, email: event.target.value })}
-                />
-                <TextInput
-                    type="text"
-                    label="password"
-                    name="password"
-                    id="floatPassword"
-                    placeholder="Password"                 
-                    value={user.password}
-                    action={(event) => setUser({ ...user, password: event.target.value })}
-                />
-                <button type='submit' onClick={submit}>Connexion</button>
-                <button>Register</button>
-        </form>
-        </div>
+        <main className='text-center input-body'>
+            <div className='form-signin'>
+                <form className="form">
+                    <TextInput
+                        type="text"
+                        label="login"
+                        name="login"
+                        id="floatingInput"
+                        placeholder="exemple@mail.com"
+                        value={user.email}
+                        action={(event) => setUser({ ...user, email: event.target.value })}
+                    />
+                    <TextInput
+                        type="password"
+                        label="Mot de passe"
+                        name="password"
+                        id="floatingPassword"
+                        placeholder="Mot de passe"                 
+                        value={user.password}
+                        action={(event) => setUser({ ...user, password: event.target.value })}
+                    />
+                    <button className='w-100 btn btn-lg btn-success mt-4' type='submit' onClick={submit}>Connexion</button>
+                    <button className='w-100 btn btn-lg btn-primary mt-4'>Register</button>
+                </form>
+            </div>
+        </main>
 
     )
 }

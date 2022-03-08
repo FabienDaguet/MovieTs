@@ -19,30 +19,32 @@ const MovieSeacrh = () => {
     const searchUrl = (URL + REQUEST + APIKEY + QUERY);
 
     fetch(searchUrl)
-    .then(response => response.json())
-    //.then(result => console.log(result.results))
-    .then(result => setResultSearch(result.results))
-    .catch(error => console.log(error));
+      .then(response => response.json())
+      //.then(result => console.log(result.results))
+      .then(result => setResultSearch(result.results))
+      .catch(error => console.log(error));
 
   }
 
   return (
     <div>
-        <h1>Films</h1>
-        Recherche : <input type="text" onChange={handleSearchTermChange}/>
-        <button className="form-button" type="submit" onClick={() => fetchMovies(searchTerm)}>recherche</button>
+      <h1>Films</h1>
+      Recherche : <input type="text" onChange={handleSearchTermChange} />
+      <button className="form-button" type="submit" onClick={() => fetchMovies(searchTerm)}>recherche</button>
+      <div className='container'>
         <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>
-        {resultSearch.map((moviesResult, id) => {
-          return (
-              <MovieCard 
-                key={moviesResult.id} 
+          {resultSearch.map((moviesResult, id) => {
+            return (
+              <MovieCard
+                key={moviesResult.id}
                 {...moviesResult}
-                onclick={() => console.log(moviesResult)}
+                onClick={() => console.log(moviesResult)}
               />
-              )
-            })}
-          </div>
+            )
+          })}
+        </div>
       </div>
+    </div>
   )
 }
 

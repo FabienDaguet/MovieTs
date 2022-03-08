@@ -5,7 +5,16 @@ import FormControl from "react-bootstrap/FormControl";
 const TextInput = (props) => {
     return (
         <div className="form-floating">
-            <FloatingLabel 
+            <input
+                type={props.type} 
+                className="form-control" 
+                id={props.id} 
+                placeholder={props.placeholder} 
+                value={props.value}
+                onChange={(e) => props.action(e)}
+            />
+            <label htmlFor={props.id}>{props.label}</label>
+            {/* <FloatingLabel 
                 controlId={props.id}
                 label={props.label}
             >
@@ -17,7 +26,7 @@ const TextInput = (props) => {
                     onChange={(e) => props.action(e)}
                     //or onChange={(e) => props.action(e.target.value)} e.target.value devient une string
                 />
-            </FloatingLabel>
+            </FloatingLabel> */}
         </div>
     )
 }

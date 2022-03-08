@@ -20,6 +20,11 @@ const MoviesList = ({setSelectedMovie}) => {
             .catch(error => console.log(error))
     };
 
+    const goToMovie = (movie) => {
+        setSelectedMovie(movie); 
+        navigate(`/films/${movie.title}`)
+    }
+
     useEffect(() => {
         getMovies()
     }, []);
@@ -32,7 +37,7 @@ const MoviesList = ({setSelectedMovie}) => {
                             <MovieCard
                                 key={movie.id}
                                 {...movie}
-                                onClick={() => {setSelectedMovie(movie); navigate(`/films/${movie.title}`)}}
+                                onClick={() => goToMovie(movie)}
                             />
                         )
                         :

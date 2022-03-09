@@ -3,7 +3,7 @@ import React from 'react'
 const MovieDetail = (props) => {
   return (
     <div className='container'>
-      <div className='row row-cols-1 row-cols-sm-1 row-cols-md-1 g-1'>
+      <div className='row row-cols-2 row-cols-sm-2 row-cols-md-2 g-3 d-flex justify-content-center'>
         <div className='col'>
           <div className='card shadow-sm'>
             <img className='bd-placeholder-img card-img-top' src={`https://image.tmdb.org/t/p/original/${props.selectedMovie.poster_path}`} alt={`affiche ${props.title}`} />

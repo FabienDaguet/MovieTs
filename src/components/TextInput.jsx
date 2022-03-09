@@ -5,7 +5,7 @@ const TextInput = (props) => {
         <div className="form-floating">
             <input
                 type={props.type} 
-                className="form-control" 
+                className={props.className}
                 id={props.id} 
                 placeholder={props.placeholder} 
                 value={props.value}

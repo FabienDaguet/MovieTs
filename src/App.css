@@ -46,7 +46,18 @@
 
 .form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
+  max-width: 21rem;
+  padding: 1rem;
   margin: auto;
+}
+
+.form-register {
+  width: 100%;
+  max-width: 31rem;
+  padding: 1rem;
+  margin: auto;
+}
+
+.form-controlRegister {
+  width: calc(31rem/2 - 1.5rem) !important;
 }

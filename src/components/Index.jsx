@@ -29,6 +29,7 @@ const Index = () => {
                         type="text"
                         label="login"
                         name="login"
+                        className="form-control mb-2" 
                         id="floatingInput"
                         placeholder="exemple@mail.com"
                         value={user.email}
@@ -38,6 +39,7 @@ const Index = () => {
                         type="password"
                         label="Mot de passe"
                         name="password"
+                        className="form-control mb-2" 
                         id="floatingPassword"
                         placeholder="Mot de passe"                 
                         value={user.password}

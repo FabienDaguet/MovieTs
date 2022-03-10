@@ -21,7 +21,6 @@ const Register = () => {
 
     return (
 
-        // Login form
         <main className='text-center input-body'>
             <div className='form-register'>
                 <form className="form">

@@ -3,25 +3,31 @@ import TextInput from "./TextInput";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Index = () => {
+const Index = ({setIsAuth}) => {
 
     let navigate = useNavigate();
+
     const [user, setUser] = useState({
         email: '',
         password: ''
     });
 
+    //ON VERIFIE LES IDENTIFS, SI OK ON REDIRIGE SUR FILMS
     const submit = (e) => {
         //console.log(user);
         const isLogged = user.email === 'admin' && user.password === 'password';
         if (isLogged) {
+            setIsAuth(true)
             navigate("/films") 
         }
     }
 
+    const register = () => {
+        navigate("/register")
+    }
+
     return (
 
-        // Login form
         <main className='text-center input-body'>
             <div className='form-signin'>
                 <form className="form">
@@ -46,7 +52,7 @@ const Index = () => {
                         action={(event) => setUser({ ...user, password: event.target.value })}
                     />
                     <button className='w-100 btn btn-lg btn-success mt-4' type='submit' onClick={submit}>Connexion</button>
-                    <button className='w-100 btn btn-lg btn-primary mt-4'>Register</button>
+                    <button className='w-100 btn btn-lg btn-primary mt-4' onClick={register}>Register</button>
                 </form>
             </div>
         </main>

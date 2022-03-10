@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios';
 import MovieCard from './MovieCard';
+import DeniedAcces from './DeniedAcces';
 import { useNavigate } from 'react-router-dom';
 
-const SeacrhTest = ({ setSelectedMovie, search }) => {
+const MoviesList = ({ setSelectedMovie, search, isAuth }) => {
 
     let navigate = useNavigate();
 
@@ -25,15 +26,15 @@ const SeacrhTest = ({ setSelectedMovie, search }) => {
             .catch(err => setErr(err))
     };
 
-    useEffect(() => {
-        getMovies()
-    }, []);
-
     //AFFICHE LA PAGE MOVIEDETAIL DU FILM SELECTIONNE
     const goToMovie = (movie) => {
         setSelectedMovie(movie);
         navigate(`/films/${movie.id}`)
     }
+
+    useEffect(() => {
+        getMovies()
+    }, []);
 
     //RECUPERE LES FILMS EN FONCTION DE LA RECHERCHE EFFECTUEE
     useEffect(() => {
@@ -42,25 +43,47 @@ const SeacrhTest = ({ setSelectedMovie, search }) => {
             .get(SearchURL)
             .then(response => setMovies(response.data.results))
             .catch(error => console.log(error));
-        console.log(search)
     }, [search]);
 
-    return (
-        <div>
-            <div className="movies-list">
-                <div className='container'>
-                    <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>
-                        {movies != null ?
-                            movies.map((movie, index) =>
+
+    //PERMET D4AFFICHER LES FILMS SEULEMENT SI CONNECTE
+    const renderSwitch = () => {
+        switch (isAuth) {
+            //Si connecté j'affiche les films
+            case true:
+                return (
+                    movies != null ?
+                        movies.map((movie, index) => {
+                            return (
                                 <MovieCard
                                     key={movie.id}
                                     {...movie}
                                     onClick={() => goToMovie(movie)}
                                 />
                             )
-                            :
-                            <p>Chargement...</p>
                         }
+                        )
+                        :
+                        <p>Chargement...</p>
+                )
+                break;
+            //Si non connecté j'affihe une demande de co
+            default:
+                return (
+                    <div>
+                        <DeniedAcces />
+                    </div>
+                )
+                break;
+        }
+    };
+
+    return (
+        <div>
+            <div className="movies-list">
+                <div className='container'>
+                    <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3'>
+                        {renderSwitch()}
                     </div>
                 </div>
             </div>
@@ -68,4 +91,4 @@ const SeacrhTest = ({ setSelectedMovie, search }) => {
     )
 }
 
-export default SeacrhTest
+export default MoviesList

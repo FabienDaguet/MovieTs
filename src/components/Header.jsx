@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBox from './SearchBox'
 
-const Header = ({ setSearch }) => {
+const Header = ({ setSearch, isAuth }) => {
 
     return (
         <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
@@ -20,7 +20,13 @@ const Header = ({ setSearch }) => {
                             <a className="nav-link disabled">Disabled</a>
                         </li>
                     </ul>
-                    <SearchBox placeholder="recherche" handleChange={(e) => setSearch(e.target.value)} />
+                    {isAuth != (false) ? 
+                        <SearchBox placeholder="recherche" handleChange={(e) => setSearch(e.target.value)} />
+                    :
+                        <div>
+                            
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

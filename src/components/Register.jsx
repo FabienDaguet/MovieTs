@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const Register = () => {
 
     let navigate = useNavigate();
+    const goToIndex = () => {
+        navigate("/");
+    };
+
     const [user, setUser] = useState({
         email: '',
         password: ''
@@ -79,7 +83,7 @@ const Register = () => {
                         //action={(event) => setUser({ ...user, password: event.target.value })}
                     />
                     <button className='w-100 btn btn-lg btn-success mt-4' type='submit' onClick={submit}>S'enregistrer</button>
-                    <button className='w-100 btn btn-lg btn-primary mt-4'>Retour</button>
+                    <button className='w-100 btn btn-lg btn-primary mt-4' onClick={() => goToIndex()}>Retour</button>
                 </form>
             </div>
         </main>

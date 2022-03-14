@@ -42,7 +42,7 @@ const MoviesList = ({ setSelectedMovie, search, isAuth }) => {
         Axios
             .get(SearchURL)
             .then(response => setMovies(response.data.results))
-            .catch(error => console.log(error));
+            .catch(error => setErr(error));
     }, [search]);
 
 

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import TextInput from "./TextInput";
 import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
 
 type IndexProps = {
     setIsAuth: (isAuth : boolean) => void;
@@ -15,14 +16,23 @@ const Index: React.FC<IndexProps> = ({setIsAuth} : IndexProps) => {
         password: ''
     });
 
+    const [error, setError] = React.useState<string | null>(null)
+
+
     //ON VERIFIE LES IDENTIFS, SI OK ON REDIRIGE SUR FILMS
-    const submit = () => {
-        //console.log(user);
-        const isLogged = user.email === 'admin' && user.password === 'password';
-        if (isLogged) {
-            setIsAuth(true)
-            navigate("/films") 
-        }
+    const submit = (event: any) => {
+        event.preventDefault();
+        Axios
+        .post('https://api-ri7.herokuapp.com/api/users/login', user)
+        //.then(res => console.log(res))
+        .then(response => {
+            if(response.data?.token != null){
+                sessionStorage.setItem( 'token', response.data.token)
+                setIsAuth(true)
+                navigate("/films")
+            }
+        })
+        .catch(error => setError("une erreur est survenue"))
     }
 
     const register = () => {
@@ -33,6 +43,7 @@ const Index: React.FC<IndexProps> = ({setIsAuth} : IndexProps) => {
 
         <main className='text-center input-body'>
             <div className='form-signin'>
+                <p>{error}</p>
                 <form className="form">
                     <TextInput
                         type="text"

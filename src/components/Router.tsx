@@ -5,6 +5,7 @@ import Header from './header/Header'
 import Index from './Index'
 import MovieDetail from './MovieDetail'
 import MoviesList from './MoviesList'
+import Profile from './profile/Profile'
 import Register from './Register'
 //import SearchTest from './test/SearchTest'
 
@@ -33,7 +34,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <Header setSearch={setSearch} isAuth={isAuth}/>
+            <Header setSearch={setSearch} isAuth={isAuth} />
             <Routes>
                 <Route path="/" element={<Index setIsAuth={setIsAuth}/>} />
                 <Route path="/register" element={<Register />} />
@@ -43,6 +44,7 @@ const Router = () => {
                                                     isAuth={isAuth}/>} 
                                                 />
                 <Route path="/films/:id" element={<MovieDetail selectedMovie={selectedMovie}/>} />
+                <Route path="/profile" element={<Profile />} />
             </Routes>
         </BrowserRouter>
     )

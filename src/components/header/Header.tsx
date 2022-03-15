@@ -1,5 +1,8 @@
 import * as React from 'react'
 import SearchBox from './SearchBox'
+import Axios from 'axios'
+import Button from '../shared/Button'
+import { Link } from 'react-router-dom'
 
 type HeaderProps = {
     setSearch : (state : string) => void
@@ -7,6 +10,7 @@ type HeaderProps = {
 }
 
 const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
+    
 
     return (
         <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
@@ -16,15 +20,16 @@ const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
                 <div className="navbar-collapse collapse" id="navbarCollapse">
                     <ul className="navbar-nav me-auto mb-2 mb-md-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page">Home</a>
+                            <Link to={'/films'} className="nav-link active">Films</Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link">Link</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link disabled">Disabled</a>
+                            <Link to={'/profile'} className="nav-link">Mon profil</Link>
                         </li>
                     </ul>
+                    
                     {isAuth != (false) ? 
                         <SearchBox placeholder="recherche" handleChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
                     :

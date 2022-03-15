@@ -1,7 +1,13 @@
-import React from 'react'
+import * as React from 'react'
 import TextInput from "./TextInput";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+interface IRegister  {
+    name: string,
+    firstName: string,
+    email: string,
+    password: string,
+}
 
 const Register = () => {
 
@@ -10,12 +16,14 @@ const Register = () => {
         navigate("/");
     };
 
-    const [user, setUser] = useState({
+    const [user, setUser] = React.useState<IRegister>({ 
+        name: '',
+        firstName: '',
         email: '',
-        password: ''
+        password: '',
     });
 
-    const submit = (e) => {
+    const submit = () => {
         //console.log(user);
         const isLogged = user.email === 'admin' && user.password === 'password';
         if (isLogged) {
@@ -37,7 +45,7 @@ const Register = () => {
                             id="floatingInputName"
                             placeholder="Dupont"
                             value={user.name}
-                            action={(event) => setUser({ ...user, name: event.target.value })}
+                            action={(event : React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, name: event.target.value })}
                         />
                         <TextInput
                             type="text"
@@ -47,7 +55,7 @@ const Register = () => {
                             id="floatingInputFirstName"
                             placeholder="exemple@mail.com"
                             value={user.firstName}
-                            action={(event) => setUser({ ...user, firstName: event.target.value })}
+                            action={(event : React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, firstName: event.target.value })}
                         />
                     </div>
                     
@@ -59,7 +67,7 @@ const Register = () => {
                         id="floatingInputEmail"
                         placeholder="Mot de passe"                 
                         value={user.email}
-                        action={(event) => setUser({ ...user, email: event.target.value })}
+                        action={(event : React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, email: event.target.value })}
                     />
 
                     <TextInput
@@ -70,9 +78,9 @@ const Register = () => {
                         id="floatingPassword"
                         placeholder="Mot de passe"                 
                         value={user.password}
-                        action={(event) => setUser({ ...user, password: event.target.value })}
+                        action={(event : React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, password: event.target.value })}
                     />
-                    <TextInput
+                    {/* <TextInput
                         type="password"
                         label="Confirmer mot de passe"
                         name="password"
@@ -80,8 +88,8 @@ const Register = () => {
                         id="floatingPasswordConfirm"
                         placeholder="Mot de passe"                 
                         value={user.password}
-                        //action={(event) => setUser({ ...user, password: event.target.value })}
-                    />
+                        action={(event) => setUser({ ...user, password: event.target.value })}
+                    /> */}
                     <button className='w-100 btn btn-lg btn-success mt-4' type='submit' onClick={submit}>S'enregistrer</button>
                     <button className='w-100 btn btn-lg btn-primary mt-4' onClick={() => goToIndex()}>Retour</button>
                 </form>

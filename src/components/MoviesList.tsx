@@ -1,16 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import * as React from 'react'
 import Axios from 'axios';
 import MovieCard from './MovieCard';
 import DeniedAcces from './DeniedAcces';
 import { useNavigate } from 'react-router-dom';
 
-const MoviesList = ({ setSelectedMovie, search, isAuth }) => {
+interface IMovie {
+    adult: boolean;
+    backdrop_path: string;
+    genre_ids: any;
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number
+}
+
+type ListProps =  {
+    setSelectedMovie: (state : IMovie) => void
+    search: string
+    isAuth: boolean
+}
+
+const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : ListProps) => {
 
     let navigate = useNavigate();
 
     //STATE
-    const [movies, setMovies] = useState([]);
-    const [err, setErr] = useState('');
+    const [movies, setMovies] = React.useState<IMovie[] | null>(null);
+    const [err, setErr] = React.useState('');
 
     //DECONSTRUCTION DE L'URL
     const URL = "https://api.themoviedb.org/3"
@@ -27,17 +50,25 @@ const MoviesList = ({ setSelectedMovie, search, isAuth }) => {
     };
 
     //AFFICHE LA PAGE MOVIEDETAIL DU FILM SELECTIONNE
-    const goToMovie = (movie) => {
+    const goToMovie = (movie: IMovie) => {
         setSelectedMovie(movie);
         navigate(`/films/${movie.id}`)
-    }
+    };
 
-    useEffect(() => {
+    React.useEffect(() => {
         getMovies()
     }, []);
 
+    const deleteMovieById = (movieIdToDelete: number) => {
+        const updateMovies = movies?.filter(movie => movie.id != movieIdToDelete)
+        if (updateMovies != null) {
+            setMovies(updateMovies);
+        };
+        
+    };
+
     //RECUPERE LES FILMS EN FONCTION DE LA RECHERCHE EFFECTUEE
-    useEffect(() => {
+    React.useEffect(() => {
         const SearchURL = `https://api.themoviedb.org/3/search/movie?api_key=3d07ff060bc510e2d02c73f56db64a16&query=${search}`;
         Axios
             .get(SearchURL)
@@ -53,12 +84,13 @@ const MoviesList = ({ setSelectedMovie, search, isAuth }) => {
             case true:
                 return (
                     movies != null ?
-                        movies.map((movie, index) => {
+                        movies.map((movie: IMovie, index:number) => {
                             return (
                                 <MovieCard
                                     key={movie.id}
                                     {...movie}
-                                    onClick={() => goToMovie(movie)}
+                                    goTo={() => goToMovie(movie)}
+                                    onClick={() => deleteMovieById(movie.id)}
                                 />
                             )
                         }

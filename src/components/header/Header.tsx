@@ -1,7 +1,12 @@
-import React from 'react'
+import * as React from 'react'
 import SearchBox from './SearchBox'
 
-const Header = ({ setSearch, isAuth }) => {
+type HeaderProps = {
+    setSearch : (state : string) => void
+    isAuth : boolean
+}
+
+const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
 
     return (
         <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
@@ -21,7 +26,7 @@ const Header = ({ setSearch, isAuth }) => {
                         </li>
                     </ul>
                     {isAuth != (false) ? 
-                        <SearchBox placeholder="recherche" handleChange={(e) => setSearch(e.target.value)} />
+                        <SearchBox placeholder="recherche" handleChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
                     :
                         <div>
                             

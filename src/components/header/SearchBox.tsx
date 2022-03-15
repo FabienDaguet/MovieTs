@@ -1,6 +1,11 @@
-import React from 'react'
+import * as React from 'react'
 
-const SearchBox = (props) => {
+type SearchProps = {
+    placeholder: string
+    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const SearchBox: React.FC<SearchProps> = (props : SearchProps) => {
     return (
         <div>
             <form className="d-flex">

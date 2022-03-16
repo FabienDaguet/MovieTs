@@ -138,7 +138,7 @@ const Register = () => {
                     /> */}
 
                         <TextInput
-                            type="text-area"
+                            type="textarea"
                             label="biography"
                             name="biography"
                             className="form-control mb-2r"

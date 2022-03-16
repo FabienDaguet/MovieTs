@@ -61,3 +61,6 @@
 .form-controlRegister {
   width: calc(31rem/2 - 1.5rem) !important;
 }
+.form-controlFlex {
+  width: calc(60rem/2 - 1.5rem) !important;
+}

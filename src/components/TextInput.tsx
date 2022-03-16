@@ -13,7 +13,7 @@ type InputProps = {
 
 const TextInput: React.FC<InputProps> = (props: InputProps) => {
     return (
-        <div className="form-floating">
+        <div className="form-floating row w-auto">
             <input
                 type={props.type} 
                 className={props.className}

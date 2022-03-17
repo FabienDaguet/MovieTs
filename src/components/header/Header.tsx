@@ -1,7 +1,7 @@
 import * as React from 'react'
 import SearchBox from './SearchBox'
 import { Link } from 'react-router-dom'
-import {GlobalContext} from '../context/Context'
+import {GlobalContext, IContext} from '../context/Context'
 
 
 type HeaderProps = {
@@ -11,7 +11,12 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
     
-    const value = React.useContext(GlobalContext);
+    const {store, setStore} = React.useContext(GlobalContext) as IContext;
+
+    const Changetheme = () => {
+        console.log("theme");
+        setStore({...store, theme: "dark"})
+    }
 
     return (
         <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
@@ -24,10 +29,10 @@ const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
                             <Link to={'/films'} className="nav-link active">Films</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to={'/films'} className="nav-link">{value.theme}</Link>
+                            <Link to={'/profile'} className="nav-link">Mon profil</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to={'/profile'} className="nav-link">Mon profil</Link>
+                            <span className="nav-link">{store.theme}</span> <button onClick={Changetheme}>Changer</button>
                         </li>
                     </ul>
                     {isAuth != (false) ? 

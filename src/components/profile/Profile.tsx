@@ -1,56 +1,42 @@
 import * as React from 'react'
 import Axios from 'axios'
 import TextInput from '../TextInput'
+import {IProfile} from '../interface/IProfile'
+import { GlobalContext, IContext } from '../context/Context'
+import { config } from '../Index'
 
-interface IProfile {
-    avatar: string | null;
-    biography: string;
-    birthdate: Date | null;
-    city: string;
-    email: string;
-    firstname: string;
-    id: number;
-    lastname: string;
-    postalCode: string;
-    password: string;
-}
+export const token = sessionStorage.getItem('token');
 
 const Profile = () => {
 
-    const [user, setUser] = React.useState<IProfile | null>(null)
-    const [isEditing, setIsEditing] = React.useState<boolean>(false)
-    const token = sessionStorage.getItem('token')
+    const {store,setStore} = React.useContext(GlobalContext) as IContext;
 
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
+    const [isEditing, setIsEditing] = React.useState<boolean>(false);
 
-    const getMyProfile = () => {
-        Axios
-            .get('https://api-ri7.herokuapp.com/api/users/profile', config)
-            .then(res => setUser(res.data))
-            .catch(err => console.log(err))
-    }
-
-    React.useEffect(() => {
-        getMyProfile();
-    }, [])
 
     const updateProfile = () => {
         if(isEditing) {
             Axios
-            .put('https://api-ri7.herokuapp.com/api/users/profile', user, config)
+            .put('https://api-ri7.herokuapp.com/api/users/profile', store.user, config)
             .then(res => console.log("my update = ", res))
             .catch(err => console.log(err))
         }
         setIsEditing(!isEditing)
-    }
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (store.user != null) {
+            const key = event.target.name;
+            const value = event.target.value;
+            setStore({...store, user:
+                {...store.user, [key] : value}
+            })
+        }
+    };
 
     return (
         <div className='container'>
-            {user != null ?
+            {store.user != null ?
                 <>
                     {isEditing ?
                         <>
@@ -65,8 +51,8 @@ const Profile = () => {
                                                 className="form-control mb-6 col-5"
                                                 id="floatingInputName"
                                                 placeholder="Dupont"
-                                                value={user.lastname}
-                                                action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, lastname: event.target.value })}
+                                                value={store.user.lastname}
+                                                action={handleChange}
                                             />
                                             <TextInput
                                                 type="text"
@@ -75,8 +61,8 @@ const Profile = () => {
                                                 className="form-control mb-2 col-5"
                                                 id="floatingInputfirstname"
                                                 placeholder="exemple@mail.com"
-                                                value={user.firstname}
-                                                action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, firstname: event.target.value })}
+                                                value={store.user.firstname}
+                                                action={handleChange}
                                             />
                                         </div>
 
@@ -88,8 +74,8 @@ const Profile = () => {
                                                 className="form-control mb-2 "
                                                 id="floatingInputCity"
                                                 placeholder="Paris"
-                                                value={user.city}
-                                                action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, city: event.target.value })}
+                                                value={store.user.city}
+                                                action={handleChange}
                                             />
                                             <TextInput
                                                 type="text"
@@ -98,8 +84,8 @@ const Profile = () => {
                                                 className="form-control mb-2"
                                                 id="floatingInputPostalCode"
                                                 placeholder="exemple@mail.com"
-                                                value={user.postalCode}
-                                                action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, postalCode: event.target.value })}
+                                                value={store.user.postalCode}
+                                                action={handleChange}
                                             />
                                         </div>
 
@@ -110,8 +96,8 @@ const Profile = () => {
                                             className="form-control mb-2"
                                             id="floatingInputEmail"
                                             placeholder="Mot de passe"
-                                            value={user.email}
-                                            action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, email: event.target.value })}
+                                            value={store.user.email}
+                                            action={handleChange}
                                         />
 
                                         <TextInput
@@ -121,8 +107,8 @@ const Profile = () => {
                                             className="form-control mb-2"
                                             id="floatingPassword"
                                             placeholder="Mot de passe"
-                                            value={user.password}
-                                            action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, password: event.target.value })}
+                                            value={store.user.password}
+                                            action={handleChange}
                                         />
                                         {/* <TextInput
                                                 type="date"
@@ -131,8 +117,8 @@ const Profile = () => {
                                                 className="form-control mb-2"
                                                 id="floatingPasswordConfirm"
                                                 placeholder="date de naissance"
-                                                value={user.birthdate}
-                                                action={(event) => setUser({ ...user, birthdate: event.target.value })}
+                                                value={store.user.birthdate}
+                                                action={handleChange}
                                             /> */}
 
                                         <TextInput
@@ -142,8 +128,8 @@ const Profile = () => {
                                             className="form-control mb-2r"
                                             id="floatingInputBiography"
                                             placeholder="exemple@mail.com"
-                                            value={user.biography}
-                                            action={(event: React.ChangeEvent<HTMLInputElement>) => setUser({ ...user, biography: event.target.value })}
+                                            value={store.user.biography}
+                                            action={handleChange}
                                         />
                                     </form>
                                 </div>
@@ -153,12 +139,12 @@ const Profile = () => {
                     :
 
                         <>
-                            <p>Nom: {user?.lastname}</p>
-                            <p>Prénom: {user?.firstname}</p>
-                            <p>Ville: {user?.city}</p>
-                            <p>Ville: {user?.postalCode}</p>
-                            <p>Email: {user?.email}</p>
-                            <p>Description: {user?.biography}</p>
+                            <p>Nom: {store.user?.lastname}</p>
+                            <p>Prénom: {store.user?.firstname}</p>
+                            <p>Ville: {store.user?.city}</p>
+                            <p>Ville: {store.user?.postalCode}</p>
+                            <p>Email: {store.user?.email}</p>
+                            <p>Description: {store.user?.biography}</p>
                         </>
 
                     }

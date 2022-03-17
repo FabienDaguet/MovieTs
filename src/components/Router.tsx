@@ -40,7 +40,7 @@ const Router = () => {
             <ContextProvider>
                 <Header setSearch={setSearch} isAuth={isAuth} />
                 <Routes>
-                    <Route path="/" element={<Index setIsAuth={setIsAuth}/>} />
+                    <Route path="/" element={<Index setIsAuth={setIsAuth} isAuth={isAuth}/>} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/films" element={<MoviesList
                                                         setSelectedMovie={setSelectedMovie} 

@@ -2,12 +2,23 @@ import * as React from 'react'
 import TextInput from "./TextInput";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
+import {GlobalContext, IContext} from './context/Context'
+import { token } from './profile/Profile';
 
 type IndexProps = {
     setIsAuth: (isAuth : boolean) => void;
+    isAuth: boolean
 }
 
-const Index: React.FC<IndexProps> = ({setIsAuth} : IndexProps) => {
+export const config = {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+};
+
+const Index: React.FC<IndexProps> = ({setIsAuth, isAuth} : IndexProps) => {
+
+    const {store, setStore} = React.useContext(GlobalContext) as IContext;
 
     let navigate = useNavigate();
 
@@ -17,6 +28,13 @@ const Index: React.FC<IndexProps> = ({setIsAuth} : IndexProps) => {
     });
 
     const [error, setError] = React.useState<string | null>(null)
+
+    const getMyProfile = () => {
+        Axios
+            .get('https://api-ri7.herokuapp.com/api/users/profile', config)
+            .then(res => setStore({...store, user: res.data}))
+            .catch(err => console.log(err))
+    }
 
 
     //ON VERIFIE LES IDENTIFS, SI OK ON REDIRIGE SUR FILMS
@@ -29,11 +47,18 @@ const Index: React.FC<IndexProps> = ({setIsAuth} : IndexProps) => {
             if(response.data?.token != null){
                 sessionStorage.setItem( 'token', response.data.token)
                 setIsAuth(true)
-                navigate("/films")
+                getMyProfile();
+                
             }
         })
         .catch(error => setError("une erreur est survenue"))
     }
+
+    React.useEffect(() => {
+        if(isAuth && store.user != null) {
+            navigate("/films")
+        }
+    },[isAuth, store.user])
 
     const register = () => {
         navigate("/register")

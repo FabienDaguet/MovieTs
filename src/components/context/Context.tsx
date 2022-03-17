@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { IProfile } from '../interface/IProfile';
 
 
 export interface IContext {
@@ -10,11 +11,13 @@ export interface IStore {
     theme: string;
     data: null | [];
     //setStore: () => void,
+    user: IProfile | null
 }
 
 const defaultValue: IStore = {
     theme: 'light',
-    data: null
+    data: null,
+    user: null,
 }
 
 type Props = {

@@ -29,6 +29,7 @@ const Index: React.FC<IndexProps> = ({setIsAuth, isAuth} : IndexProps) => {
 
     const [error, setError] = React.useState<string | null>(null)
 
+    //ON RECUPERE LES INFOS DU PROFIL ET ON LES SET DANS LE CONTEXT
     const getMyProfile = () => {
         Axios
             .get('https://api-ri7.herokuapp.com/api/users/profile', config)
@@ -54,6 +55,7 @@ const Index: React.FC<IndexProps> = ({setIsAuth, isAuth} : IndexProps) => {
         .catch(error => setError("une erreur est survenue"))
     }
 
+    //SI ISAUTH EST TRUE ET STORE.USER DANS CONTEXT EST DIFFERENT DE NUL ON REDIRIGE
     React.useEffect(() => {
         if(isAuth && store.user != null) {
             navigate("/films")

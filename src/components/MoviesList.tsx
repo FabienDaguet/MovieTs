@@ -3,23 +3,8 @@ import Axios from 'axios';
 import MovieCard from './MovieCard';
 import DeniedAcces from './DeniedAcces';
 import { useNavigate } from 'react-router-dom';
-
-interface IMovie {
-    adult: boolean;
-    backdrop_path: string;
-    genre_ids: any;
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number
-}
+import { GlobalContext, IContext } from './context/Context';
+import {IMovie} from './interface/IMovies'
 
 type ListProps =  {
     setSelectedMovie: (state : IMovie) => void
@@ -30,6 +15,8 @@ type ListProps =  {
 const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : ListProps) => {
 
     let navigate = useNavigate();
+
+    const {store,setStore} = React.useContext(GlobalContext) as IContext;
 
     //STATE
     const [movies, setMovies] = React.useState<IMovie[] | null>(null);
@@ -45,7 +32,7 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
         Axios
             .get(URL + REQUEST + APIKEY)
             //.then(response => console.log(response.data.results))
-            .then(response => setMovies(response.data.results))
+            .then(response => setStore({...store, movies: response.data.results}))
             .catch(err => setErr(err))
     };
 
@@ -83,8 +70,8 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
             //Si connecté j'affiche les films
             case true:
                 return (
-                    movies != null ?
-                        movies.map((movie: IMovie, index:number) => {
+                    store.movies != null ?
+                        store.movies.map((movie: IMovie, index:number) => {
                             return (
                                 <MovieCard
                                     key={movie.id}

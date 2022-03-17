@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { IMovie } from '../interface/IMovies';
 import { IProfile } from '../interface/IProfile';
 
 
@@ -9,14 +10,14 @@ export interface IContext {
 
 export interface IStore {
     theme: string;
-    data: null | [];
+    movies: null |IMovie[];
     //setStore: () => void,
     user: IProfile | null
 }
 
 const defaultValue: IStore = {
     theme: 'light',
-    data: null,
+    movies: null,
     user: null,
 }
 

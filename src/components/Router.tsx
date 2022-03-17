@@ -7,6 +7,7 @@ import MovieDetail from './MovieDetail'
 import MoviesList from './MoviesList'
 import Profile from './profile/Profile'
 import Register from './Register'
+import ContextProvider from './context/Context'
 //import SearchTest from './test/SearchTest'
 
 interface IMovie {
@@ -32,20 +33,24 @@ const Router = () => {
     const [search, setSearch] = React.useState('');
     const [isAuth, setIsAuth] = React.useState(false);
 
+    
+
     return (
         <BrowserRouter>
-            <Header setSearch={setSearch} isAuth={isAuth} />
-            <Routes>
-                <Route path="/" element={<Index setIsAuth={setIsAuth}/>} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/films" element={<MoviesList
-                                                    setSelectedMovie={setSelectedMovie} 
-                                                    search={search} 
-                                                    isAuth={isAuth}/>} 
-                                                />
-                <Route path="/films/:id" element={<MovieDetail selectedMovie={selectedMovie}/>} />
-                <Route path="/profile" element={<Profile />} />
-            </Routes>
+            <ContextProvider>
+                <Header setSearch={setSearch} isAuth={isAuth} />
+                <Routes>
+                    <Route path="/" element={<Index setIsAuth={setIsAuth}/>} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/films" element={<MoviesList
+                                                        setSelectedMovie={setSelectedMovie} 
+                                                        search={search} 
+                                                        isAuth={isAuth}/>} 
+                                                    />
+                    <Route path="/films/:id" element={<MovieDetail selectedMovie={selectedMovie}/>} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
+            </ContextProvider>
         </BrowserRouter>
     )
 }

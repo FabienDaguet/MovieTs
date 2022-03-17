@@ -1,8 +1,8 @@
 import * as React from 'react'
 import SearchBox from './SearchBox'
-import Axios from 'axios'
-import Button from '../shared/Button'
 import { Link } from 'react-router-dom'
+import {GlobalContext} from '../context/Context'
+
 
 type HeaderProps = {
     setSearch : (state : string) => void
@@ -11,6 +11,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
     
+    const value = React.useContext(GlobalContext);
 
     return (
         <nav className='navbar navbar-expand-md navbar-dark fixed-top bg-dark'>
@@ -23,13 +24,12 @@ const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
                             <Link to={'/films'} className="nav-link active">Films</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link">Link</a>
+                            <Link to={'/films'} className="nav-link">{value.theme}</Link>
                         </li>
                         <li className="nav-item">
                             <Link to={'/profile'} className="nav-link">Mon profil</Link>
                         </li>
                     </ul>
-                    
                     {isAuth != (false) ? 
                         <SearchBox placeholder="recherche" handleChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
                     :

@@ -19,7 +19,7 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
     const {store,setStore} = React.useContext(GlobalContext) as IContext;
 
     //STATE
-    const [movies, setMovies] = React.useState<IMovie[] | null>(null);
+            //const [movies, setMovies] = React.useState<IMovie[] | null>(null) les films sont set dans le context
     const [err, setErr] = React.useState('');
 
     //DECONSTRUCTION DE L'URL
@@ -36,20 +36,22 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
             .catch(err => setErr(err))
     };
 
+    //AFFICHE LES FILMS AU CHARGEMENT DE LA PAGE
+    React.useEffect(() => {
+        getMovies()
+    }, []);
+
     //AFFICHE LA PAGE MOVIEDETAIL DU FILM SELECTIONNE
     const goToMovie = (movie: IMovie) => {
         setSelectedMovie(movie);
         navigate(`/films/${movie.id}`)
     };
 
-    React.useEffect(() => {
-        getMovies()
-    }, []);
-
+    //SUPPRIME UN FILM VIA UN FILTRE SUR SON ID ET AFFICHE TOUS LES AUTRES
     const deleteMovieById = (movieIdToDelete: number) => {
-        const updateMovies = movies?.filter(movie => movie.id != movieIdToDelete)
+        const updateMovies = store.movies?.filter(movie => movie.id != movieIdToDelete)
         if (updateMovies != null) {
-            setMovies(updateMovies);
+            setStore({...store, movies: updateMovies})
         };
         
     };
@@ -59,7 +61,7 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
         const SearchURL = `https://api.themoviedb.org/3/search/movie?api_key=3d07ff060bc510e2d02c73f56db64a16&query=${search}`;
         Axios
             .get(SearchURL)
-            .then(response => setMovies(response.data.results))
+            .then(response => setStore({...store, movies: response.data.results}))
             .catch(error => setErr(error));
     }, [search]);
 

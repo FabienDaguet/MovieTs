@@ -47,7 +47,7 @@ const Profile = () => {
                                             <TextInput
                                                 type="text"
                                                 label="Nom"
-                                                name="Nom"
+                                                name="lastname"
                                                 className="form-control mb-6 col-5"
                                                 id="floatingInputName"
                                                 placeholder="Dupont"
@@ -57,7 +57,7 @@ const Profile = () => {
                                             <TextInput
                                                 type="text"
                                                 label="Prénom"
-                                                name="Prénom"
+                                                name="firstname"
                                                 className="form-control mb-2 col-5"
                                                 id="floatingInputfirstname"
                                                 placeholder="exemple@mail.com"
@@ -70,7 +70,7 @@ const Profile = () => {
                                             <TextInput
                                                 type="text"
                                                 label="ville"
-                                                name="ville"
+                                                name="city"
                                                 className="form-control mb-2 "
                                                 id="floatingInputCity"
                                                 placeholder="Paris"
@@ -80,7 +80,7 @@ const Profile = () => {
                                             <TextInput
                                                 type="text"
                                                 label="code postal"
-                                                name="code postal"
+                                                name="postalCode"
                                                 className="form-control mb-2"
                                                 id="floatingInputPostalCode"
                                                 placeholder="exemple@mail.com"

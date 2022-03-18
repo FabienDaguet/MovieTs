@@ -10,7 +10,8 @@ export interface IContext {
 
 export interface IStore {
     theme: string;
-    movies: null |IMovie[];
+    movies: null |IMovie[] | undefined;
+    //addedMovies: null | [];
     //setStore: () => void,
     user: IProfile | null
 }
@@ -18,6 +19,7 @@ export interface IStore {
 const defaultValue: IStore = {
     theme: 'light',
     movies: null,
+    //addedMovies: null,
     user: null,
 }
 

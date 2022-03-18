@@ -32,11 +32,17 @@ const Header: React.FC<HeaderProps> = ({ setSearch, isAuth } : HeaderProps) => {
                             <Link to={'/profile'} className="nav-link">Mon profil</Link>
                         </li>
                         <li className="nav-item">
+                            <Link to={'/add'} className="nav-link">Ajouter un film</Link>
+                        </li>
+                        <li className="nav-item">
                             <span className="nav-link">{store.theme}</span> <button onClick={Changetheme}>Changer</button>
                         </li>
                     </ul>
                     {isAuth != (false) ? 
-                        <SearchBox placeholder="recherche" handleChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
+                        <>
+                            <span className="nav-link">{store.user?.firstname}</span>
+                            <SearchBox placeholder="recherche" handleChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
+                        </>
                     :
                         <div>
                             

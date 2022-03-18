@@ -8,6 +8,8 @@ import MoviesList from './MoviesList'
 import Profile from './profile/Profile'
 import Register from './Register'
 import ContextProvider from './context/Context'
+import MovieAdd from './MovieAdd'
+
 //import SearchTest from './test/SearchTest'
 
 interface IMovie {
@@ -49,6 +51,7 @@ const Router = () => {
                                                     />
                     <Route path="/films/:id" element={<MovieDetail selectedMovie={selectedMovie}/>} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/add" element={<MovieAdd />} />
                 </Routes>
             </ContextProvider>
         </BrowserRouter>

@@ -5,6 +5,7 @@ import DeniedAcces from './DeniedAcces';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext, IContext } from './context/Context';
 import {IMovie} from './interface/IMovies'
+import { config } from './Index';
 
 type ListProps =  {
     setSelectedMovie: (state : IMovie) => void
@@ -17,16 +18,28 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
     let navigate = useNavigate();
 
     const {store,setStore} = React.useContext(GlobalContext) as IContext;
-
+    
     //STATE
-            //const [movies, setMovies] = React.useState<IMovie[] | null>(null) les films sont set dans le context
+    //const [movies, setMovies] = React.useState<IMovie[] | null>(null) les films sont set dans le context
     const [err, setErr] = React.useState('');
-
+    const [addedMovies, setAddedMovies] = React.useState();
+    
     //DECONSTRUCTION DE L'URL
     const URL = "https://api.themoviedb.org/3"
     const REQUEST = "/discover/movie?sort_by=popularity.desc&"
     const APIKEY = "api_key=3d07ff060bc510e2d02c73f56db64a16"
 
+    //RECUPERE UNE LISTE DE FILM ENVOYEE PAR L'API ET EST EXECUTEE PAR LE USE EFFECT DE L'API RI
+    const getMoviesRi7 = () => {
+        if(store.movies != null) {
+            Axios
+            .get('https://api-ri7.herokuapp.com/api/movies', config)
+            .then(response => setAddedMovies(response.data.results))
+            //.then(response => setStore({...store, movies: response.data.results}))
+            .catch(err => setErr(err))
+        }
+    };
+    
     //RECUPERE UNE LISTE DE FILM ENVOYEE PAR L'API ET EST EXECUTEE PAR LE USE EFFECT
     const getMovies = () => {
         Axios
@@ -39,6 +52,7 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
     //AFFICHE LES FILMS AU CHARGEMENT DE LA PAGE
     React.useEffect(() => {
         getMovies()
+        getMoviesRi7()
     }, []);
 
     //AFFICHE LA PAGE MOVIEDETAIL DU FILM SELECTIONNE
@@ -66,7 +80,7 @@ const MoviesList: React.FC<ListProps> = ({ setSelectedMovie, search, isAuth } : 
     }, [search]);
 
 
-    //PERMET D4AFFICHER LES FILMS SEULEMENT SI CONNECTE
+    //AFFICHER LES FILMS SEULEMENT SI CONNECTE
     const renderSwitch = () => {
         switch (isAuth) {
             //Si connecté j'affiche les films
